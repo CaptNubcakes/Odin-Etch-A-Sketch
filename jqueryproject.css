@@ -4,26 +4,95 @@ body {
     width: auto;
     background:black;
 }
-
+.header {
+    text-align:center;
+    background-color:black;
+    color:yellow;
+    padding: 20px 0;
+}
+.subWrapper {
+    text-align:center;
+    background:url(http://c4.q-assets.com/images/products/p/zeh/zeh-033_1z.jpg)center center;
+    background-repeat:no-repeat;
+    background-size:660px 512px;
+    margin-left: auto;
+    margin-right:auto;
+    margin-top:0px;
+    margin-bottom:0px;
+    height:595px;
+    width:700px;
+}
+.knob1, #left {
+    position:absolute;
+    margin-top:468px;
+    margin-left:-71px;
+    height:83px;
+    width:83px;
+}
+.knob2, #right {
+    position:absolute;
+    margin-top:468px;
+    margin-left:493px;
+    height:82px;
+    width:82px;
+}
 #workspace {
     text-align:center;
-    width:auto;
-    height:500px;
-    margin:0 auto;
-    line-height:10px;
+    background-color:white;
+    width:500px;
+    height:320px;
+    margin: 125px auto 0 auto;
+    display:inline-block;
+    border:5px solid white;
+    border-radius:15px;
+    line-height: 0px;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px black;
 }
 .blocks {
-    width:20px;
-    height:20px;
     display:inline-block;
     background-color:white;
     margin:0;
 }
-
+.blackBlocks {
+    background-color:black;
+}
 .footer {
     text-align:center;
-    margin:0,auto;
+    margin:0, auto;
     padding:10px 0;
+}
+#statusleft, #statusright {
+    background-color:white;
+    color:black;
+}
+button {
+    background-color:yellow;
+    color:black;
+    margin:0 10px;
+}
+#statusleft {
+    display:none;
+}
+#statusright {
+    display:none;
+}
+.sources {
+    color:yellow;
+    text-align:center;
+}
+.sources ul {
+    list-style:none;
+    margin:10px auto;
+    text-align:center;
+}
+.sources ul li {
+    display:inline-block;
+    margin:0px 10px;
+}
+#overAPI {
+    display:block;
+    font-size:14px;
 }
 button {
     background-color:yellow;
