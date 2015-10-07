@@ -1,14 +1,31 @@
 //Document ready function to start the code when the page is ready
 $(document).ready(function () {
+    
+    //Makes the Etch A Sketch container draggable
+    function dragging() {
+        $('.subWrapper').draggable({
+            revert: true
+        }, function () {});
+    }
+    
+    //Makes it fadeOut when mousedown
+    $('.subWrapper').mousedown(function () {
+        $.when($(".blackBlocks").fadeOut(1500)).done(function () {
+            newGrid();
+        });
 
+    });
+    dragging();
+    
     //Function to wipe clean for later use
     function clearSpace() {
-        $(".blocks").removeClass('blackBlocks');
-        $(".blocks").css('background-color', 'white');
+        $.when($(".blackBlocks").fadeOut(500)).done(function () {
+            newGrid();
+        });
     }
 
     //Code to add the defaut grid on load
-    var blockSize;
+    var blockSize = 10;
     var blocks$;
 
     function defaultGrid() {
@@ -16,7 +33,7 @@ $(document).ready(function () {
         var blockRow = 320 / 10;
         var blockColumn = 500 / 10;
         var gridDimension = blockRow * blockColumn;
-        $('#workspace').off();
+        $('#workspace').empty();
         $('#workspace').html('');
         for (var i = 1; i <= gridDimension; i++) {
             divArray[i] = "<div class='blocks' style='width:" + 10 + "px; height:" + 10 + "px;'></div>"
@@ -28,6 +45,7 @@ $(document).ready(function () {
     defaultGrid();
 
     //Code to begin coloring once mouse enters the grid
+    //Using 3 handlers makes it more responsive when moving the mouse quickly with smaller blocks
     function beginColoring() {
         $('.blocks').on('mouseover', 'div', function () {
             $(this).addClass('blackBlocks');
@@ -48,6 +66,7 @@ $(document).ready(function () {
         var blockRow = 420 / blockSize;
         var blockColumn = 600 / blockSize;
         var gridDimension = blockRow * blockColumn;
+        $('#workspace').empty();
         $('#workspace').html('');
         for (var i = 1; i <= gridDimension; i++) {
             divArray[i] = "<div class='blocks' style='width:" + blockSize + "px; height:" + blockSize + "px;'></div>"
@@ -58,8 +77,7 @@ $(document).ready(function () {
     };
 
     $("#lineSize").click(function reSize() {
-        $('#workspace').remove('.blocks');
-        clearSpace();
+        newGrid();
         var input;
 
         //Doesn't allow invalid selection
