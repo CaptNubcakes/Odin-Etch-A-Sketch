@@ -53,9 +53,14 @@ body {
     display:inline-block;
     background-color:white;
     margin:0;
+    padding:0;
+    border:none;
 }
 .blackBlocks {
     background-color:black;
+    margin:0;
+    padding:0;
+    border:none;
 }
 .footer {
     text-align:center;
@@ -93,9 +98,4 @@ button {
 #overAPI {
     display:block;
     font-size:14px;
-}
-button {
-    background-color:yellow;
-    color:black;
-    margin:0 10px;
 }
