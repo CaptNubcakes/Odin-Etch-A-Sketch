@@ -1,26 +1,26 @@
-//Document ready function to start the code when the page is ready
+ //Document ready function to start the code when the page is ready
 $(document).ready(function () {
-    
-    //Makes the Etch A Sketch container draggable
+
+    //Makes the Etch A Sketch draggable and fadeOut on drag start
     function dragging() {
         $('.subWrapper').draggable({
-            revert: true
-        }, function () {});
+            revert: true,
+            cancel: '#workspace',
+            start: function () {
+                $.when($(".blackBlocks").fadeOut(1500)).done(function () {
+                    newGrid();
+                    gridView();
+                })
+            }
+        })
     }
-    
-    //Makes it fadeOut when mousedown
-    $('.subWrapper').mousedown(function () {
-        $.when($(".blackBlocks").fadeOut(1500)).done(function () {
-            newGrid();
-        });
-
-    });
     dragging();
-    
+
     //Function to wipe clean for later use
     function clearSpace() {
         $.when($(".blackBlocks").fadeOut(500)).done(function () {
             newGrid();
+            gridView();
         });
     }
 
@@ -45,7 +45,7 @@ $(document).ready(function () {
     defaultGrid();
 
     //Code to begin coloring once mouse enters the grid
-    //Using 3 handlers makes it more responsive when moving the mouse quickly with smaller blocks
+    //Using 3 handlers makes it more responsive when moving the mouse quickly
     function beginColoring() {
         $('.blocks').on('mouseover', 'div', function () {
             $(this).addClass('blackBlocks');
@@ -123,21 +123,27 @@ $(document).ready(function () {
             animCount++;
         });
         clearSpace();
+        gridView();
+        /*clickToColor();*/
     });
 
 
     //Code for "Change Color" button
-    $('#pickColor').click(function () {
-        var hexColor = prompt('Choose a hex color value!');
+    var colorChoice;
+    var colorClass= "."+colorChoice
+    $('#pickColor').click( function chooseColor () {
+        colorChoice = prompt('Name a color!');
         $('.blocks').on('mousemove', function () {
-            $(this).css('backgroundColor', hexColor);
+            $(this).addClass(colorClass).css('backgroundColor',colorChoice);
         });
         $('.blocks').on('mouseover', function () {
-            $(this).css('backgroundColor', hexColor);
+            $(this).addClass(colorClass).css('backgroundColor',colorChoice);
         });
         $('.blocks').on('mouseenter', function () {
-            $(this).css('backgroundColor', hexColor);
+            $(this).addClass(colorClass).css('backgroundColor',colorChoice);
         });
+        /*clickToColor();*/
+        return colorClass;
     });
 
 
@@ -151,14 +157,15 @@ $(document).ready(function () {
 
     $('#randomcolors').click(function () {
         $('.blocks').on('mousemove', function () {
-            $(this).css("background-color", randomColor());
+            $(this,'.blackBlocks').css("background-color", randomColor());
         });
+        /*clickToColor();*/
     });
 
     //Function for workspace color change
     $('#backgroundColor').click(function () {
-        var colorChoice = prompt('Choose a background color!');
-        $('.blocks').css('background-color', colorChoice);
+        var chooseColor = prompt('Choose a background color!');
+        $('.blocks').css('background-color', chooseColor);
         beginColoring();
     });
 
@@ -219,11 +226,40 @@ $(document).ready(function () {
             } else {
                 rotRbwrd();
             }
-
             yPrev = event.pageY;
             $('#statusright').html(e.pageY);
         });
     }
     trackMouseHorz();
     trackMouseVert();
+
+    //Grid view checkbox
+    var borderCheck$ = $('input[name=borders]');
+
+    function gridView() {
+        if (borderCheck$.is(':checked')) {
+            $('.blocks').addClass('addBorder');
+        } else {
+            $('.blocks').removeClass('addBorder');
+        }
+    };
+    borderCheck$.change(gridView);
+
+   /* //Click to Color checkbox
+    var ctoc$ = $('input[name=clickcolor]');
+
+    function clickToColor() {
+        var borderColor= $('blackBlocks').css('backgroundColor');
+        if (ctoc$.is(':checked')) {
+            $('#workspace').off();
+            $('.blocks').off();
+            $('.blocks').click(function () {
+                $(this).addClass('blackBlocks');
+                $(this).css({'border': '1px solid' + borderColor}); 
+            });
+        } else {
+            beginColoring();
+        }
+    }
+    ctoc$.change(clickToColor); */
 });
